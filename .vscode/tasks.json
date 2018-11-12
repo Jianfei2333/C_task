@@ -1,0 +1,51 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": [
+                "if [ ${fileExtname} == 'c' ]; then",
+                "   gcc ${fileBasename} -o ${fileBasenameNoExtension}.out;",
+                "else",
+                "   g++ ${fileBasename} -o ${fileBasenameNoExtension}.out;",
+                "fi"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "echo": false,
+                "focus": true
+            },
+            "problemMatcher": {
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^(.*):(\\d+):(\\d+):\\s+(error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            }
+        },
+        {
+            "label": "Run",
+            "type": "shell",
+            "dependsOn": "Build",
+            "command": "./${fileBasenameNoExtension}.out",
+            "args": [],
+            "presentation": {
+                "reveal": "always",
+                "echo": false,
+                "focus": true
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+    ]
+}
